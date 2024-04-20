@@ -39,4 +39,17 @@ function playRound(playerSelection, computerSelection) {
     return result
 }
 
-playRound('rock', getComputerChoice())
+function playGame(){
+    let playerRoundWins = 0
+    let pcRoundWins = 0
+    for (let i = 0; i <= 4; i++){
+        // playRound('rock', getComputerChoice())
+        
+        playRound(prompt('Rock, Paper or Scissors?'), getComputerChoice()).includes('You Win!') ? playerRoundWins++ : pcRoundWins++
+    }
+
+    result = playerRoundWins > pcRoundWins ? 'You Won!': 'The Computer Won'
+    console.log(result)
+    return result
+}
+playGame()
