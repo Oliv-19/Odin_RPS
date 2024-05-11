@@ -8,17 +8,24 @@ function getComputerChoice() {
     } else {
         pcChoice= 'Scissors'
     }
-    console.log(pcChoice);
     return pcChoice
 }
 
+let resultDiv = document.querySelector('.resultsDiv')
+let resultText = document.createElement('p')
+resultDiv.append(resultText)
 function playRound(playerSelection, computerSelection) {
+
     playerSelection = playerSelection.toUpperCase()
     computerSelection = computerSelection.toUpperCase()
+    
     let rock = 'rock'.toUpperCase()
     let paper = 'paper'.toUpperCase()
     let scissors = 'scissors'.toUpperCase()
+
     let result
+
+ 
 
     if (playerSelection == computerSelection) {
         result = "It's a tie!"
@@ -35,21 +42,71 @@ function playRound(playerSelection, computerSelection) {
     }else if (playerSelection == scissors && computerSelection == paper) {
         result = "You Win! Scissors beats Paper"
     }
-    console.log(result)
+    resultText.textContent = result
     return result
 }
 
-function playGame(){
-    let playerRoundWins = 0
-    let pcRoundWins = 0
-    for (let i = 0; i <= 4; i++){
-        // playRound('rock', getComputerChoice())
+let playerRoundWins = 0
+let pcRoundWins = 0
+let points = document.querySelector('.points')
+
+let result = ''
+
+
+
+function playGame(playerChoice){
+
+    let playerWin = playRound(playerChoice, getComputerChoice())
+
+    if(playerWin.includes('tie')){
+        playerRoundWins = playerRoundWins
+        pcRoundWins = pcRoundWins
         
-        playRound(prompt('Rock, Paper or Scissors?'), getComputerChoice()).includes('You Win!') ? playerRoundWins++ : pcRoundWins++
+    } else if (playerWin.includes('You Win!')){
+        playerRoundWins++ 
+    } else{
+        pcRoundWins++
     }
 
-    result = playerRoundWins > pcRoundWins ? 'You Won!': 'The Computer Won'
-    console.log(result)
+    
+
+    if (playerRoundWins == 5 ) {
+        
+        result = 'You Won!' 
+
+        let resultDisplay = document.createElement('h3')
+        resultDiv.append(resultDisplay)
+        resultDisplay.textContent = result
+        btns.forEach((element) => {
+            //element.removeEventListener('click', callPlaygame)
+            element.disabled = true
+        })
+                
+
+    } 
+    if (pcRoundWins == 5 ) {
+        result ='The Computer Won'  
+
+        let resultDisplay = document.createElement('h1')
+        resultDiv.append(resultDisplay)
+        resultDisplay.textContent = result
+        btns.forEach((element) => {
+            //element.removeEventListener('click', callPlaygame)
+            element.disabled = true 
+        })
+    }
     return result
 }
-playGame()
+
+
+
+const btns = document.querySelectorAll('button')
+
+btns.forEach((element) => {
+    element.addEventListener('click', () =>{
+       playGame(element.id) 
+       poitnsDisplay.textContent = 'Player: ' + playerRoundWins+ ' Computer: ' + pcRoundWins
+    }) 
+})
+let poitnsDisplay = document.createElement('h3')
+points.append(poitnsDisplay)
