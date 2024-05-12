@@ -14,6 +14,7 @@ function getComputerChoice() {
 let resultDiv = document.querySelector('.resultsDiv')
 let resultText = document.createElement('p')
 resultDiv.append(resultText)
+
 function playRound(playerSelection, computerSelection) {
 
     playerSelection = playerSelection.toUpperCase()
@@ -24,8 +25,6 @@ function playRound(playerSelection, computerSelection) {
     let scissors = 'scissors'.toUpperCase()
 
     let result
-
- 
 
     if (playerSelection == computerSelection) {
         result = "It's a tie!"
@@ -51,9 +50,8 @@ let pcRoundWins = 0
 let points = document.querySelector('.points')
 
 let result = ''
-
-
-
+let resultDisplay = document.createElement('h2')
+resultDiv.append(resultDisplay)
 function playGame(playerChoice){
 
     let playerWin = playRound(playerChoice, getComputerChoice())
@@ -73,28 +71,17 @@ function playGame(playerChoice){
     if (playerRoundWins == 5 ) {
         
         result = 'You Won!' 
-
-        let resultDisplay = document.createElement('h3')
-        resultDiv.append(resultDisplay)
         resultDisplay.textContent = result
-        btns.forEach((element) => {
-            //element.removeEventListener('click', callPlaygame)
-            element.disabled = true
-        })
-                
-
+        playerRoundWins =0    
+        pcRoundWins =0  
     } 
     if (pcRoundWins == 5 ) {
         result ='The Computer Won'  
-
-        let resultDisplay = document.createElement('h1')
-        resultDiv.append(resultDisplay)
         resultDisplay.textContent = result
-        btns.forEach((element) => {
-            //element.removeEventListener('click', callPlaygame)
-            element.disabled = true 
-        })
+        playerRoundWins =0    
+        pcRoundWins =0  
     }
+
     return result
 }
 
@@ -105,8 +92,12 @@ const btns = document.querySelectorAll('button')
 btns.forEach((element) => {
     element.addEventListener('click', () =>{
        playGame(element.id) 
-       poitnsDisplay.textContent = 'Player: ' + playerRoundWins+ ' Computer: ' + pcRoundWins
+       poitnsDisplay.textContent = 'Player: ' + playerRoundWins
+       poitnsDisplay2.textContent = ' Computer: ' + pcRoundWins
+       
     }) 
 })
 let poitnsDisplay = document.createElement('h3')
-points.append(poitnsDisplay)
+let poitnsDisplay2 = document.createElement('h3')
+
+points.append(poitnsDisplay, poitnsDisplay2)
